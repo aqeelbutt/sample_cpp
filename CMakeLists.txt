@@ -7,6 +7,4 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project(test)
-
 add_executable (test test.cpp)
