@@ -17,14 +17,14 @@ pipeline {
         stage('Upload exe to Nexus') {
             steps {
               nexusArtifactUploader {
-                nexusVersion('nexus3')
-        	protocol('http2')
-        	nexusUrl('192.168.122.206')
-        	groupId('sample_c')
-        	version('1.0.$BUILD_NUMBER')
-        	repository('ncwdg-repo')
-        	credentialsId('ncwdgs-nexus-creds')
-        	artifact {
+                  nexusVersion('nexus3')
+        	  protocol('http2')
+        	  nexusUrl('192.168.122.206')
+        	  groupId('sample_c')
+        	  version('1.0.$BUILD_NUMBER')
+        	  repository('ncwdg-repo')
+        	  credentialsId('ncwdgs-nexus-creds')
+        	  artifact {
                     artifactId('sample_c')
                     type('exe')
                     classifier('debug')
