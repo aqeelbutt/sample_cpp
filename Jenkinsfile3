@@ -2,13 +2,11 @@ pipeline {
     agent any
     stages {
         stage('CMAKE Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
-            }
+      	  steps {
+              cmakeBuild(
+                installation: 'InSearchPath'
+          )
+          }
         }
         stage('Convert .cpp to .exe') {
             steps {
