@@ -16,27 +16,25 @@ pipeline {
         }
         stage('Upload exe to Nexus') {
             steps {
-              nexusArtifactUploader {
-                  nexusVersion('nexus3')
-        	  protocol('http2')
-        	  nexusUrl('192.168.122.206')
-        	  groupId('sample_c')
-        	  version('1.0.$BUILD_NUMBER')
-        	  repository('ncwdg-repo')
-        	  credentialsId('ncwdgs-nexus-creds')
-        	  artifact {
+     	      nexusArtifactUploader {
+                nexusVersion('nexus3')
+                protocol('https')
+                nexusUrl('192.168.122.206')
+                groupId('sample_c')
+                version('1.0.$BUILD_NUMBER')
+                repository('ncwdg-repo')
+                credentialsId('ncwdg-nexus-creds')
+                artifact {
                     artifactId('sample_c')
                     type('exe')
                     classifier('debug')
-            	    file('sample_c.exe')
+                    file('sample_c.exe')
         }
-        			}		
-      			}
-    		    }
-	stage('Run CPP Check') {
+      }
+    }
+        }
             steps {
                 sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
             	}
              }	
               }
-            }
