@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('CMAKE Build') {
+            steps {
+                sh 'echo "Hello World"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
+            }
+        }
+        stage('Convert .cpp to .exe') {
+            steps {
+                sh 'g++ test.cpp -o sample_c.exe'
+                sh 'chmod a+x sample_c.exe'
+            }
+        }
+        stage('Run CPP Check') {
+            steps {
+                sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
+            }
+        }
+    }
+}
