@@ -1,49 +1,53 @@
-pipeline {
-    agent any
+node("worker1") {
 
-    stages {
-        stage('CMAKE Build') {
-      	  steps {
-              cmakeBuild(
-                installation: 'InSearchPath'
-          )
+  def VERSION = "1.0.$BUILD_NUMBER";
+
+  stages {
+      stage("Checkout code") {
+        checkout scm
           }
+      stage('CMAKE Build') {
+        steps {
+            cmakeBuild(
+              installation: 'InSearchPath'
+            )
         }
-        stage('Convert .cpp to .exe') {
-            steps {
-                sh 'g++ test.cpp -o sample_c.exe'
-                sh 'chmod a+x sample_c.exe'
-            }
-        }
-        stage('Run CPP Check') {
-            steps {
-                sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
-            }
-        }
-        stage('Upload exe to Nexus') {
-            steps {
-              nexusArtifactUploader(
-              nexusVersion: 'nexus3',
-              protocol: 'https',
-              nexusUrl: '192.168.122.206',
-              groupId: 'sample_c',
-              version: "1.0.${env.BUILD_NUMBER}",
-              repository: 'ncwdg-repo',
-              credentialsId: 'ncwdgs-nexus-creds',
-              artifacts: [
-                  [artifactId: sample_c,
-                  classifier: '',
-                  file: 'sample_c.exe',
-                  type: 'exe'
-                         ]
+      }
+      stage('Convert .cpp to .exe') {
+          steps {
+              sh 'g++ test.cpp -o sample_c.exe'
+              sh 'chmod a+x sample_c.exe'
+          }
+      }
+      stage('Run CPP Check') {
+          steps {
+              sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
+          }
+      }
+      stage('Upload exe to Nexus') {
+          steps {
+            nexusArtifactUploader(
+            nexusVersion: 'nexus3',
+            protocol: 'https',
+            nexusUrl: '192.168.122.206',
+            groupId: 'sample_c',
+            version: '$VERSION',
+            repository: 'ncwdg-repo',
+            credentialsId: 'ncwdgs-nexus-creds',
+            artifacts: [
+                [artifactId: sample_c,
+                classifier: '',
+                file: 'sample_c.exe',
+                type: 'exe'
                        ]
-                    )
-        }
+                     ]
+                  )
       }
-        stage('CppCheck') {
-            steps {
-                publishCppcheck pattern:'cppcheck.xml'
-                }
+    }
+      stage('CppCheck') {
+        steps {
+            publishCppcheck pattern:'cppcheck.xml'
             }
-      }
+        }
      }
+  }
