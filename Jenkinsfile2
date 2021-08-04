@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    // a.groovy
-    class BuildValueObject {
-    def LOADED_BUILD_NUMBER
-
-    BuildValueObject(script) {
-        this.LOADED_BUILD_NUMBER = "${script.env.BUILD_NUMBER}"
-          }
-        }
-return new BuildValueObject(this)
-    
     stages {
         stage('CMAKE Build') {
       	  steps {
@@ -37,7 +27,7 @@ return new BuildValueObject(this)
               protocol: 'https',
               nexusUrl: '192.168.122.206',
               groupId: 'sample_c',
-              version: '1.0.${env.BUILD_NUMBER}',
+              version: '1.0.7',
               repository: 'ncwdg-repo',
               credentialsId: 'ncwdgs-nexus-creds',
               artifacts: [
