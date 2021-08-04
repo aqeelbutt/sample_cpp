@@ -27,7 +27,7 @@ pipeline {
               protocol: 'https',
               nexusUrl: '192.168.122.206',
               groupId: 'sample_c',
-              version: '1.0.${env.BUILD_NUMBER}',
+              version: '1.0."${env.BUILD_NUMBER}"',
               repository: 'ncwdg-repo',
               credentialsId: 'ncwdgs-nexus-creds',
               artifacts: [
