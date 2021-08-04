@@ -15,6 +15,7 @@ pipeline {
             }
         }
         stage('Upload exe to Nexus') {
+            steps {
             nexusArtifactUploader(
                 nexusVersion: 'nexus3',
                 protocol: 'http',
@@ -31,6 +32,7 @@ pipeline {
                       ]
                     )
         }
+      }
         stage('Run CPP Check') {
             steps {
                 sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
