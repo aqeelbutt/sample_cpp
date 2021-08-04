@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        VERSION = '1.0.${env.BUILD_NUMBER}'
-    }
     stages {
         stage('CMAKE Build') {
       	  steps {
@@ -30,7 +27,7 @@ pipeline {
               protocol: 'https',
               nexusUrl: '192.168.122.206',
               groupId: 'sample_c',
-              version: '${VERSION}',
+              version: '1.0.0',
               repository: 'ncwdg-repo',
               credentialsId: 'ncwdgs-nexus-creds',
               artifacts: [
