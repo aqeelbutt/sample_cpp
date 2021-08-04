@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     // a.groovy
-    import groovy.transform.Field
+    class BuildValueObject {
+    def LOADED_BUILD_NUMBER
 
-    @Field
-    def LOADED_BUILD_NUMBER = "${env.BUILD_NUMBER}"
-
-    return this
-
-    def a = load('a.groovy')
+    BuildValueObject(script) {
+        this.LOADED_BUILD_NUMBER = "${script.env.BUILD_NUMBER}"
+          }
+        }
+return new BuildValueObject(this)
     
     stages {
         stage('CMAKE Build') {
