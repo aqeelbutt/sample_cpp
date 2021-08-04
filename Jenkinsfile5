@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NEXUS_CREDENTIALS = credentials('ncwdgs-nexus-creds')
+        NEXUS_CREDENTIALS = credentialsId('ncwdgs-nexus-creds')
     }
 
     stages {
