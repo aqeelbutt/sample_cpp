@@ -16,19 +16,19 @@ pipeline {
         }
         stage('Upload exe to Nexus') {
             steps {
-            nexusArtifactUploader(
-                nexusVersion: 'nexus3',
-                protocol: 'http',
-                nexusUrl: 'my.nexus.address',
-                groupId: 'com.example',
-                version: version,
-                repository: 'RepositoryName',
-                credentialsId: 'CredentialsId',
-                artifacts: [
-                    [artifactId: projectName,
-                    classifier: '',
-                    file: 'my-service-' + version + '.jar',
-                    type: 'jar']
+              nexusArtifactUploader(
+              nexusVersion: 'nexus3',
+              protocol: 'https',
+              nexusUrl: '192.168.122.206',
+              groupId: 'sample_c',
+              version: 1.0.$BUILD_NUMBER,
+              repository: 'ncwdg-repo',
+              credentialsId: 'ncwdgs-nexus-creds',
+              artifacts: [
+                  [artifactId: sample_c,
+                  classifier: '',
+                  file: 'sample_c.exe'
+                  type: 'exe']
                       ]
                     )
         }
@@ -38,10 +38,10 @@ pipeline {
                 sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
             }
         }
-#        stage('CppCheck') {
-#            steps {
-#                publishCppcheck pattern:'cppcheck.xml'
-#                }
-#           }
+        stage('CppCheck') {
+            steps {
+                publishCppcheck pattern:'cppcheck.xml'
+                }
+            }
       }
      }
