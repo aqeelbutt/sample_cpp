@@ -29,7 +29,7 @@ pipeline {
                 sh '''curl -k -v -u admin:${NEXUS_P} --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/${BUILD_NUMBER}/sample_c-${BUILD_NUMBER}.exe'''
             }
           }
-        stage('CppCheck') {
+        stage('Publish CppCheck') {
             steps {
                 publishCppcheck pattern:'cppcheck.xml'
                 }
