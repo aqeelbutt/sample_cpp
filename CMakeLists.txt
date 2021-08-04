@@ -1,3 +1,5 @@
+project(sample_c)
+
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 add_definitions(-std=c++11)
