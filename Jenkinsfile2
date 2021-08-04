@@ -1,12 +1,45 @@
 pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-          cmakeBuild(
-            installation: 'InSearchPath'
+    agent any
+    stages {
+        stage('CMAKE Build') {
+      	  steps {
+              cmakeBuild(
+                installation: 'InSearchPath'
           )
+          }
+        }
+        stage('Convert .cpp to .exe') {
+            steps {
+                sh 'g++ test.cpp -o sample_c.exe'
+                sh 'chmod a+x sample_c.exe'
+            }
+        }
+        stage('Upload exe to Nexus') {
+            nexusArtifactUploader(
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                nexusUrl: 'my.nexus.address',
+                groupId: 'com.example',
+                version: version,
+                repository: 'RepositoryName',
+                credentialsId: 'CredentialsId',
+                artifacts: [
+                    [artifactId: projectName,
+                    classifier: '',
+                    file: 'my-service-' + version + '.jar',
+                    type: 'jar']
+                      ]
+                    )
+        }
+        stage('Run CPP Check') {
+            steps {
+                sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
+            }
+        }
+        stage('CppCheck') {
+            steps {
+                publishCppcheck pattern:'cppcheck.xml'
+                }
+            }
       }
-    }
-  }
-}
+     }
