@@ -29,6 +29,11 @@ pipeline {
                 sh '''curl -k -v -u admin:Welcome@2021! --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c/1.0.29/sample_c-${BUILD_NUMBER}.exe'''
             }
           }
+        stage('CppCheck') {
+            steps {
+                publishCppcheck pattern:'cppcheck.xml'
+                }
+            }
         
          }
        }
