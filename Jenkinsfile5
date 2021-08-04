@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        VERSION = '1.0.0'
+        NEXUS_CREDENTIALS = credentials('ncwdgs-nexus-creds')
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Upload .exe to Nexus') {
             steps {
-                sh '''curl -k -v -u admin:Welcome@2021! --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c/sample_c-${BUILD_NUMBER}.exe'''
+                sh '''curl -k -v -u ${NEXUS_CREDENTIALS} --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c-${BUILD_NUMBER}/sample_c-${BUILD_NUMBER}.exe'''
             }
           }
         stage('CppCheck') {
