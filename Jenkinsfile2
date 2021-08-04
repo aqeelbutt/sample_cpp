@@ -1,6 +1,16 @@
 pipeline {
     agent any
 
+    // a.groovy
+    import groovy.transform.Field
+
+    @Field
+    def LOADED_BUILD_NUMBER = "${env.BUILD_NUMBER}"
+
+    return this
+
+    def a = load('a.groovy')
+    
     stages {
         stage('CMAKE Build') {
       	  steps {
@@ -27,7 +37,7 @@ pipeline {
               protocol: 'https',
               nexusUrl: '192.168.122.206',
               groupId: 'sample_c',
-              version: '1.0.0',
+              version: '1.0.${env.BUILD_NUMBER}',
               repository: 'ncwdg-repo',
               credentialsId: 'ncwdgs-nexus-creds',
               artifacts: [
