@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        VERSION = '1.0.0'
+    }
+
     stages {
         stage('CMAKE Build') {
       	  steps {
@@ -23,19 +27,18 @@ pipeline {
         stage('Upload exe to Nexus') {
             steps {
               nexusArtifactUploader(
-              nexusVersion: 'nexus3',
-              protocol: 'https',
-              nexusUrl: '192.168.122.206',
-              groupId: 'sample_c',
-              version: '1.0.0',
-              repository: 'ncwdg-repo',
-              credentialsId: 'ncwdgs-nexus-creds',
-              artifacts: [
-                  [artifactId: sample_c,
-                  classifier: '',
-                  file: 'sample_c.exe',
-                  type: 'exe'
-                         ]
+                  nexusVersion: 'nexus3',
+                  protocol: 'https',
+                  nexusUrl: '192.168.122.206',
+                  groupId: 'sample_c',
+                  version: '${VERSION}',
+                  repository: 'ncwdg-repo',
+                  credentialsId: 'ncwdgs-nexus-creds',
+                  artifacts: [
+                      [artifactId: sample_c,
+                      classifier: '',
+                      file: 'sample_c.exe',
+                      type: 'exe']
                        ]
                     )
         }
