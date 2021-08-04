@@ -10,7 +10,7 @@ pipeline {
       	  steps {
               cmakeBuild(
                 installation: 'InSearchPath'
-          )
+           )
           }
         }
         stage('Convert .cpp to .exe') {
@@ -41,12 +41,7 @@ pipeline {
                       type: 'exe']
                        ]
                     )
-        }
-      }
-         stage('CppCheck') {
-            steps {
-                publishCppcheck pattern:'cppcheck.xml'
-                }
-            }
-      }
+          }
+         }
+       }
      }
