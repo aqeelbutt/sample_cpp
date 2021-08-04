@@ -28,7 +28,7 @@ pipeline {
                   [artifactId: sample_c,
                   classifier: '',
                   file: 'sample_c.exe'
-                  type: 'exe']
+                  type: '']
                       ]
                     )
         }
