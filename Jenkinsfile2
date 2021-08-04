@@ -14,6 +14,11 @@ pipeline {
                 sh 'chmod a+x sample_c.exe'
             }
         }
+        stage('Run CPP Check') {
+            steps {
+                sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
+            }
+        }
         stage('Upload exe to Nexus') {
             steps {
               nexusArtifactUploader(
@@ -27,17 +32,13 @@ pipeline {
               artifacts: [
                   [artifactId: sample_c,
                   classifier: '',
-                  file: 'sample_c.exe'
-                      ],
-                      ]
+                  file: 'sample_c.exe',
+                  type: 'exe'
+                         ]
+                       ]
                     )
         }
       }
-        stage('Run CPP Check') {
-            steps {
-                sh 'cppcheck --xml --xml-version=2 . 2> cppcheck.xml'
-            }
-        }
         stage('CppCheck') {
             steps {
                 publishCppcheck pattern:'cppcheck.xml'
