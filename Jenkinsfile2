@@ -22,7 +22,7 @@ pipeline {
           }
         stage('Run SonarQube Scan') {
             steps {
-                sh ''' /opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=sample_c -Dsonar.sources=. -Dsonar.host.url=http://192.168.122.214:9000 -Dsonar.login=admin -Dsonar.password=Welcome@2021! '''
+                sh ''' /opt/sonar-scanner/bin/sonar-scanner  -Dproject.settings=../sonar-project.properties '''
             }
         }
         stage('Convert .cpp to .exe') {
