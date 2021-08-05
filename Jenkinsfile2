@@ -22,7 +22,7 @@ pipeline {
           }
         stage('Run SonarQube Scan') {
             steps {
-                sh ''' /opt/sonar-scanner/bin/sonar-scanner  -Dproject.settings=../sonar-project.properties '''
+                sh ''' /opt/sonar-scanner/bin/sonar-scanner  -Dproject.settings=sonar-project.properties '''
             }
         }
         stage('Convert .cpp to .exe') {
