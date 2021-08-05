@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         NEXUS_P = credentials('nexus-admin-password')
+        SONAR_P = credentials('ncwdg-sample_c2-sonar-token')
     }
 
     stages {
@@ -22,7 +23,7 @@ pipeline {
           }
         stage('Run SonarQube Scan') {
             steps {
-                sh ''' /opt/sonar-scanner/bin/sonar-scanner  -Dproject.settings=sonar-project.properties '''
+                sh ''' /opt/sonar-scanner/bin/sonar-scanner  -Dproject.settings=sonar-project.properties -Dsonar.login=${SONAR_P} '''
             }
         }
         stage('Convert .cpp to .exe') {
