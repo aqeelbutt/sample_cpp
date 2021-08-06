@@ -4,6 +4,7 @@ pipeline {
     environment {
         NEXUS_P = credentials('nexus-admin-password')
         SONAR_P = credentials('ncwdg-sample_c2-sonar-token')
+        APP_NAME = 'sample_c'
     }
 
     stages {
@@ -31,13 +32,13 @@ pipeline {
         }
       stage('Convert .cpp to .exe') {
           steps {
-                sh '''g++ test.cpp -o sample_c.exe
-                    chmod a+x sample_c.exe'''
+              sh '''g++ test.cpp -o ${APP_NAME}.exe
+                    chmod a+x ${APP_NAME}.exe'''
             }
         }
       stage('Upload .exe to Nexus') {
           steps {
-                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c/${JOB_NAME}/1.0.${BUILD_NUMBER}/sample_c-${BUILD_NUMBER}.exe'''
+                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file ${APP_NAME}.exe https://192.168.122.206/repository/ncwdg-repo/${APP_NAME}/${APP_NAME}/${JOB_NAME}/1.0.${BUILD_NUMBER}/${APP_NAME}-${BUILD_NUMBER}.exe'''
             }
           }
          }
