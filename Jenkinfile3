@@ -37,7 +37,7 @@ pipeline {
         }
       stage('Upload .exe to Nexus') {
           steps {
-                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c/1.0.${BUILD_NUMBER}/sample_c-${BUILD_NUMBER}.exe'''
+                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file sample_c.exe https://192.168.122.206/repository/ncwdg-repo/sample_c/sample_c/${JOB_NAME}/1.0.${BUILD_NUMBER}/sample_c-${BUILD_NUMBER}.exe'''
             }
           }
          }
