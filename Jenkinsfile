@@ -5,6 +5,7 @@ pipeline {
         NEXUS_P = credentials('nexus-admin-password')
         SONAR_P = credentials('ncwdg-sample_c2-sonar-token')
         APP_NAME = 'sample_c'
+        VERSION = '1.0'
     }
 
     stages {
@@ -38,7 +39,7 @@ pipeline {
         }
       stage('Upload .exe to Nexus') {
           steps {
-                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file ${APP_NAME}.exe https://192.168.122.206/repository/ncwdg-repo/${APP_NAME}/${JOB_NAME}/1.0.${BUILD_NUMBER}/${APP_NAME}-${BUILD_NUMBER}.exe'''
+                sh '''curl -k -v -u admin:${NEXUS_P} --upload-file ${APP_NAME}.exe https://192.168.122.206/repository/ncwdg-repo/${APP_NAME}/${JOB_NAME}/${VERSION}.${BUILD_NUMBER}/${APP_NAME}-${BUILD_NUMBER}.exe'''
             }
           }
          }
